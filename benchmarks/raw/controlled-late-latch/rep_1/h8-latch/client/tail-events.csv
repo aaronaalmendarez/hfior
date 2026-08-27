@@ -1,0 +1,4 @@
+frame,actual_age_ns,classification,start_lateness_ns,latch_cost_ns,post_latch_to_use_ns,head_at_frame_start,head_at_initial_latch,head_at_final_latch,local_tail_after,records
+1,3298382,unknown,80157,264,40,9,9,9,9,7
+155,1083198,unknown,77036,163,38,5153,5160,5160,5160,13
+171,653851,unknown,97269,165,36,5686,5697,5697,5697,14

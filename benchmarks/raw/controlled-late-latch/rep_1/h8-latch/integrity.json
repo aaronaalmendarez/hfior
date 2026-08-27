@@ -1,0 +1,27 @@
+{
+  "schema": 3,
+  "valid": true,
+  "errors": [],
+  "checks": {
+    "client_rc": true,
+    "bridge_rc": true,
+    "summary_present": true,
+    "bridge_stats_present": true,
+    "producer_ring_drops": true,
+    "producer_eager_drops": true,
+    "sequence_gaps": true,
+    "duplicate_or_reordered": true,
+    "bridge_invalid_acknowledgements": true,
+    "ring_depth_final": true,
+    "path_records_match_published": true
+  },
+  "policy": "hfior-8-latch",
+  "evidence_class": "synthetic-hfior-transport",
+  "records_published": 9988,
+  "actual_path_records": 9988,
+  "shadow_ring_records": 0,
+  "syn_reports": 9987,
+  "observed_reports_per_s": 7986.129292098688,
+  "ring_depth_final": 0,
+  "acknowledgements": 302
+}

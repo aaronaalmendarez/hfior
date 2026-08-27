@@ -1,0 +1,13 @@
+{
+  "schema": 3,
+  "evidence_class": "synthetic-screening-model",
+  "limitations": [
+    "One short run per screening cell; latency values are diagnostic, not inferential.",
+    "CPU extrapolation is consumer-process CPU only and excludes the unavoidable producer/kernel per-observation term.",
+    "Hardware cycles/report require physical perf counters; perf was unavailable in the research container."
+  ],
+  "formulae": {
+    "actions": "intercept + slope * report_rate",
+    "normalized_cycles": "consumer_cpu_seconds_per_second * chosen_reference_frequency_hz"
+  }
+}

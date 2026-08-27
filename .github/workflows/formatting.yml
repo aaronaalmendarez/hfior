@@ -1,0 +1,23 @@
+name: Formatting and metadata
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate repository files
+        run: ./scripts/validate.sh
+      - name: Check shell scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          find . -type f -name '*.sh' -print0 | xargs -0 shellcheck --severity=error
+      - name: Check patch whitespace
+        run: git diff --check

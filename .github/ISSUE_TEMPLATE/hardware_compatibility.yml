@@ -1,0 +1,23 @@
+name: Hardware compatibility
+description: Report whether a device and stack can run the physical harness.
+title: "[Hardware]: "
+labels: [hardware]
+body:
+  - type: input
+    id: device
+    attributes: {label: Device model and firmware}
+    validations: {required: true}
+  - type: textarea
+    id: stack
+    attributes:
+      label: System stack
+      description: CPU, kernel, distribution, compositor, USB topology, and permissions.
+    validations: {required: true}
+  - type: input
+    id: rates
+    attributes: {label: Requested and observed rates}
+    validations: {required: true}
+  - type: textarea
+    id: result
+    attributes: {label: Compatibility result and logs}
+    validations: {required: true}

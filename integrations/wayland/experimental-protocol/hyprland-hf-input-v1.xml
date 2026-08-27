@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="hyprland_hf_input_v1">
+  <copyright>
+    Copyright 2026 HFIOR contributors
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+  </copyright>
+
+  <interface name="hyprland_hf_input_manager_v1" version="1">
+    <description summary="experimental authorized high-frequency pointer history">
+      This private experimental interface lets a compositor grant a focused,
+      pointer-locked client access to an ordered relative-input observation
+      ring. It is not a stable or proposed standard.
+    </description>
+
+    <request name="destroy" type="destructor"/>
+
+    <request name="get_stream">
+      <description summary="request a stream for a focused locked surface">
+        The compositor validates the seat, surface, focus, pointer-lock state
+        and policy. Denial is reported on the stream object.
+      </description>
+      <arg name="id" type="new_id" interface="hyprland_hf_input_stream_v1"/>
+      <arg name="seat" type="object" interface="wl_seat"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="flags" type="uint" summary="requested optional features"/>
+    </request>
+  </interface>
+
+  <interface name="hyprland_hf_input_stream_v1" version="1">
+    <description summary="scoped shared observation stream">
+      Once active, immutable sample records are published by the compositor
+      into a memfd-backed ring. The client maps it read-only. The notification
+      fd signals overflow and revocation. Ordinary motion does not wake the
+      client.
+    </description>
+
+    <enum name="feature">
+      <entry name="history" value="1" summary="ordered sample history"/>
+      <entry name="deadline_hint" value="4" summary="client may provide advisory deadline"/>
+    </enum>
+
+    <enum name="clock">
+      <entry name="monotonic" value="1"/>
+    </enum>
+
+    <enum name="notify_reason">
+      <entry name="overflow" value="2"/>
+      <entry name="revoked" value="4"/>
+    </enum>
+
+    <enum name="denial_reason">
+      <entry name="policy" value="1"/>
+      <entry name="not_focused" value="2"/>
+      <entry name="not_locked" value="3"/>
+      <entry name="unsupported" value="4"/>
+      <entry name="conflict" value="5"/>
+    </enum>
+
+    <request name="destroy" type="destructor"/>
+
+    <request name="set_deadline_hint">
+      <description summary="publish an advisory next consumption deadline">
+        The timestamp uses the stream clock. The compositor may ignore or
+        clamp this hint. A hint never grants authorization or forces spinning.
+      </description>
+      <arg name="time_hi" type="uint"/>
+      <arg name="time_lo" type="uint"/>
+      <arg name="period_ns" type="uint"/>
+      <arg name="flags" type="uint"/>
+    </request>
+
+    <request name="acknowledge">
+      <description summary="acknowledge a consumed monotonic ring position">
+        consumed_tail is the exclusive ring position consumed by the client.
+        The compositor rejects backwards or beyond-head acknowledgements.
+      </description>
+      <arg name="consumed_tail_hi" type="uint"/>
+      <arg name="consumed_tail_lo" type="uint"/>
+      <arg name="generation_hi" type="uint"/>
+      <arg name="generation_lo" type="uint"/>
+    </request>
+
+    <event name="active">
+      <description summary="stream activated and file descriptors granted"/>
+      <arg name="ring_fd" type="fd"/>
+      <arg name="notify_fd" type="fd"/>
+      <arg name="mapping_size" type="uint"/>
+      <arg name="capacity" type="uint"/>
+      <arg name="sample_stride" type="uint"/>
+      <arg name="clock_id" type="uint" enum="clock"/>
+      <arg name="features" type="uint" summary="granted feature bitset"/>
+      <arg name="generation_hi" type="uint"/>
+      <arg name="generation_lo" type="uint"/>
+    </event>
+
+    <event name="notify">
+      <arg name="reason" type="uint" enum="notify_reason"/>
+      <arg name="latest_head_hi" type="uint"/>
+      <arg name="latest_head_lo" type="uint"/>
+    </event>
+
+    <event name="denied">
+      <arg name="reason" type="uint" enum="denial_reason"/>
+    </event>
+
+    <event name="revoked">
+      <arg name="reason" type="uint" enum="notify_reason"/>
+      <arg name="final_head_hi" type="uint"/>
+      <arg name="final_head_lo" type="uint"/>
+      <arg name="generation_hi" type="uint"/>
+      <arg name="generation_lo" type="uint"/>
+    </event>
+  </interface>
+</protocol>

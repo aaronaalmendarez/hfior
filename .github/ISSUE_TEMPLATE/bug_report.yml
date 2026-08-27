@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a reproducible correctness or integration problem.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not attach sensitive raw input traces."
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: HFIOR revision
+      placeholder: Commit SHA or release
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: CPU, kernel, distribution, compositor, compiler, device, and integration.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Minimal exact commands and configuration.
+    validations:
+      required: true
+  - type: textarea
+    id: integrity
+    attributes:
+      label: Integrity output
+      description: Drops, gaps, duplication/reordering, invalid ACKs, and logs.

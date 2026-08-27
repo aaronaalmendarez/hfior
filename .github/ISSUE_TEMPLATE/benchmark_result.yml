@@ -1,0 +1,66 @@
+name: Benchmark Result
+description: Submit an independently reproducible physical or synthetic result.
+title: "[Benchmark]: "
+labels: [benchmark]
+body:
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Evidence class
+      options: [Physical device, Synthetic source]
+    validations:
+      required: true
+  - type: input
+    id: cpu
+    attributes: {label: CPU}
+    validations: {required: true}
+  - type: input
+    id: kernel
+    attributes: {label: Kernel}
+    validations: {required: true}
+  - type: input
+    id: distro
+    attributes: {label: Distribution}
+    validations: {required: true}
+  - type: input
+    id: compositor
+    attributes: {label: Compositor and version}
+  - type: input
+    id: gpu
+    attributes: {label: GPU and driver}
+  - type: input
+    id: mouse
+    attributes: {label: Mouse model and firmware}
+    validations: {required: true}
+  - type: input
+    id: requested
+    attributes: {label: Requested polling rate}
+    validations: {required: true}
+  - type: input
+    id: observed
+    attributes: {label: Achieved observed report rate}
+    validations: {required: true}
+  - type: input
+    id: monitor
+    attributes: {label: Monitor refresh and frame/consumer rate}
+    validations: {required: true}
+  - type: input
+    id: policy
+    attributes: {label: Policy and scenario}
+    validations: {required: true}
+  - type: textarea
+    id: command
+    attributes: {label: Exact command and configuration}
+    validations: {required: true}
+  - type: textarea
+    id: result
+    attributes:
+      label: Result summary
+      description: Include p50/p95/p99/p99.9/max and every integrity counter.
+    validations: {required: true}
+  - type: textarea
+    id: raw
+    attributes:
+      label: Raw-result attachment
+      description: Attach or link the raw output and manifest after reviewing it for private input data.
+    validations: {required: true}

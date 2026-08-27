@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use HFIOR in research, please cite this software and identify the version and evidence class used."
+title: "HFIOR: High-Frequency Input Observation Ring"
+type: software
+version: 0.1.0
+date-released: 2026-08-26
+license: MIT
+authors:
+  - name: "HFIOR contributors"
+abstract: "An experimental architecture for preserving high-frequency input observations while decoupling expensive consumer reactions from hardware report rate."
+keywords:
+  - input
+  - latency
+  - Linux
+  - Wayland
+  - ring buffer

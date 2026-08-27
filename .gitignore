@@ -1,0 +1,15 @@
+/build/
+/build-*/
+/benchmark-output/
+*.o
+*.a
+*.so
+*.gcda
+*.gcno
+*.profraw
+compile_commands.json
+.cache/
+__pycache__/
+*.pyc
+*.swp
+*~

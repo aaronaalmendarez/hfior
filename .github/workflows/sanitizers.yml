@@ -1,0 +1,18 @@
+name: Sanitizers
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  asan-ubsan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ASan and UBSan
+        env:
+          CC: clang
+        run: ./scripts/sanitize.sh
